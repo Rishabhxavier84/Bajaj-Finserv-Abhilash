@@ -3,18 +3,21 @@ package com.example.webhookapp;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.example.webhookapp.service.WebhookService;
 
 @SpringBootApplication
-public class WebhookAppApplication {
+public class WebhookAppApplication implements CommandLineRunner {
+
+	@Autowired
+	private WebhookService webhookService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebhookAppApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner run(WebhookService webhookService) {
-		return args -> webhookService.executeFlow();
+	@Override
+	public void run(String... args) {
+		webhookService.executeFlow();
 	}
 }

@@ -19,12 +19,12 @@ public class WebhookService {
             String url = "https://bfhldevapigw.healthrx.co.in/hiring/generateWebhook/JAVA";
             Map<String, String> requestBody = new HashMap<>();
             requestBody.put("name", "John Doe");
-            requestBody.put("regNo", "REG12347");          // ✅ removed extra space
-            requestBody.put("email", "john@example.com");  // ✅ removed extra space
+            requestBody.put("regNo", "REG12347");
+            requestBody.put("email", "john@example.com");
 
             ResponseEntity<Map> response = null;
 
-            // Retry mechanism for reliability
+
             for (int i = 1; i <= 3; i++) {
                 try {
                     response = restTemplate.postForEntity(url, requestBody, Map.class);
@@ -32,7 +32,7 @@ public class WebhookService {
                 } catch (HttpServerErrorException e) {
                     System.err.println("Attempt " + i + " failed with 500: " + e.getResponseBodyAsString());
                     if (i == 3) throw e;
-                    Thread.sleep(2000); // Wait 2 seconds and retry
+                    Thread.sleep(2000);
                 }
             }
 
@@ -41,7 +41,7 @@ public class WebhookService {
                 return;
             }
 
-            // Step 2: Parse and log webhook response
+
             System.out.println("Raw Response Body: " + response.getBody());
             System.out.println("Raw Body Keys: " + response.getBody().keySet());
 
@@ -56,7 +56,7 @@ public class WebhookService {
                 return;
             }
 
-            // Step 3: Prepare SQL query submission
+
             String finalQuery = "SELECT * FROM students;"; // You can replace with your actual SQL
 
             Map<String, String> answerBody = new HashMap<>();
